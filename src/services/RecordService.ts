@@ -18,12 +18,12 @@ import { registerAutoRefresh, resetAutoRefresh } from "@/tools/refresh";
 
 export interface RecordAuthResponse<T = RecordModel> {
     /**
-     * The signed PocketBase auth record.
+     * The signed HanzoBase auth record.
      */
     record: T;
 
     /**
-     * The PocketBase record auth token.
+     * The HanzoBase record auth token.
      *
      * If you are looking for the OAuth2 access and refresh tokens
      * they are available under the `meta.accessToken` and `meta.refreshToken` props.
@@ -85,7 +85,7 @@ export interface OAuth2AuthConfig extends SendOptions {
     // optional callback that is triggered after the OAuth2 sign-in/sign-up url generation
     urlCallback?: OAuth2UrlCallback;
 
-    // optional query params to send with the PocketBase auth request (eg. fields, expand, etc.)
+    // optional query params to send with the HanzoBase auth request (eg. fields, expand, etc.)
     query?: RecordOptions;
 }
 
@@ -477,7 +477,7 @@ export class RecordService<M = RecordModel> extends CrudService<M> {
      * @deprecated This form of authWithOAuth2 is deprecated.
      *
      * Please use `authWithOAuth2Code()` OR its simplified realtime version
-     * as shown in https://pocketbase.io/docs/authentication/#oauth2-integration.
+     * as shown in https://hanzo.ai/docs/authentication/#oauth2-integration.
      */
     async authWithOAuth2<T = M>(
         provider: string,
@@ -524,7 +524,7 @@ export class RecordService<M = RecordModel> extends CrudService<M> {
      * it doesn't allow `window.open` calls as part of an `async` click functions.
      * To workaround this you can either change your click handler to not be marked as `async`
      * OR manually call `window.open` before your `async` function and use the
-     * window reference in your own custom `urlCallback` (see https://github.com/pocketbase/pocketbase/discussions/2429#discussioncomment-5943061).
+     * window reference in your own custom `urlCallback` (see https://github.com/hanzoai/backendPB/discussions/2429#discussioncomment-5943061).
      * For example:
      * ```js
      * <button id="btn">Login with Gitlab</button>
@@ -550,7 +550,7 @@ export class RecordService<M = RecordModel> extends CrudService<M> {
         // fallback to legacy format
         if (args.length > 1 || typeof args?.[0] === "string") {
             console.warn(
-                "PocketBase: This form of authWithOAuth2() is deprecated and may get removed in the future. Please replace with authWithOAuth2Code() OR use the authWithOAuth2() realtime form as shown in https://pocketbase.io/docs/authentication/#oauth2-integration.",
+                "HanzoBase: This form of authWithOAuth2() is deprecated and may get removed in the future. Please replace with authWithOAuth2Code() OR use the authWithOAuth2() realtime form as shown in https://hanzo.ai/docs/authentication/#oauth2-integration.",
             );
             return this.authWithOAuth2Code<T>(
                 args?.[0] || "",
@@ -568,7 +568,7 @@ export class RecordService<M = RecordModel> extends CrudService<M> {
         // open a new popup window in case config.urlCallback is not set
         //
         // note: it is opened before any async calls due to Safari restrictions
-        // (see https://github.com/pocketbase/pocketbase/discussions/2429#discussioncomment-5943061)
+        // (see https://github.com/hanzoai/backendPB/discussions/2429#discussioncomment-5943061)
         let eagerDefaultPopup: Window | null = null;
         if (!config.urlCallback) {
             eagerDefaultPopup = openBrowserPopup(undefined);

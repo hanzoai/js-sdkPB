@@ -208,7 +208,7 @@ declare class BaseAuthStore {
      *
      * NB! This function doesn't validate the token or its data.
      * Usually this isn't a concern if you are interacting only with the
-     * PocketBase API because it has the proper server-side security checks in place,
+     * HanzoBase API because it has the proper server-side security checks in place,
      * but if you are using the store `isValid` state for permission controls
      * in a node server (eg. SSR), then it is recommended to call `authRefresh()`
      * after loading the cookie to ensure an up-to-date token and model state.
@@ -580,11 +580,11 @@ declare abstract class CrudService<M> extends BaseService {
 }
 interface RecordAuthResponse<T = RecordModel> {
     /**
-     * The signed PocketBase auth record.
+     * The signed HanzoBase auth record.
      */
     record: T;
     /**
-     * The PocketBase record auth token.
+     * The HanzoBase record auth token.
      *
      * If you are looking for the OAuth2 access and refresh tokens
      * they are available under the `meta.accessToken` and `meta.refreshToken` props.
@@ -640,7 +640,7 @@ interface OAuth2AuthConfig extends SendOptions {
     };
     // optional callback that is triggered after the OAuth2 sign-in/sign-up url generation
     urlCallback?: OAuth2UrlCallback;
-    // optional query params to send with the PocketBase auth request (eg. fields, expand, etc.)
+    // optional query params to send with the HanzoBase auth request (eg. fields, expand, etc.)
     query?: RecordOptions;
 }
 interface OTPResponse {
@@ -782,7 +782,7 @@ declare class RecordService<M = RecordModel> extends CrudService<M> {
      * @deprecated This form of authWithOAuth2 is deprecated.
      *
      * Please use `authWithOAuth2Code()` OR its simplified realtime version
-     * as shown in https://pocketbase.io/docs/authentication/#oauth2-integration.
+     * as shown in https://hanzo.ai/docs/authentication/#oauth2-integration.
      */
     authWithOAuth2<T = M>(provider: string, code: string, codeVerifier: string, redirectURL: string, createData?: {
         [key: string]: any;
@@ -824,7 +824,7 @@ declare class RecordService<M = RecordModel> extends CrudService<M> {
      * it doesn't allow `window.open` calls as part of an `async` click functions.
      * To workaround this you can either change your click handler to not be marked as `async`
      * OR manually call `window.open` before your `async` function and use the
-     * window reference in your own custom `urlCallback` (see https://github.com/pocketbase/pocketbase/discussions/2429#discussioncomment-5943061).
+     * window reference in your own custom `urlCallback` (see https://github.com/hanzoai/backendPB/discussions/2429#discussioncomment-5943061).
      * For example:
      * ```js
      * <button id="btn">Login with Gitlab</button>
@@ -1218,11 +1218,11 @@ interface BeforeSendResult {
     };
 }
 /**
- * PocketBase JS Client.
+ * HanzoBase JS Client.
  */
 declare class Client {
     /**
-     * The base PocketBase backend url address (eg. 'http://127.0.0.1.8090').
+     * The base HanzoBase backend url address (eg. 'http://127.0.0.1.8090').
      */
     baseURL: string;
     /**
@@ -1324,7 +1324,7 @@ declare class Client {
     constructor(baseURL?: string, authStore?: BaseAuthStore | null, lang?: string);
     /**
      * @deprecated
-     * With PocketBase v0.23.0 admins are converted to a regular auth
+     * With HanzoBase v0.23.0 admins are converted to a regular auth
      * collection named "_superusers", aka. you can use directly collection("_superusers").
      */
     get admins(): RecordService;
@@ -1371,7 +1371,7 @@ declare class Client {
      * - `string` (_single quotes are autoescaped_)
      * - `number`
      * - `boolean`
-     * - `Date` object (_stringified into the PocketBase datetime format_)
+     * - `Date` object (_stringified into the HanzoBase datetime format_)
      * - `null`
      * - everything else is converted to a string using `JSON.stringify()`
      *
@@ -1457,14 +1457,14 @@ type AsyncClearFunc = () => Promise<void>;
  *
  * ```
  * import AsyncStorage from "@react-native-async-storage/async-storage";
- * import PocketBase, { AsyncAuthStore } from "pocketbase";
+ * import HanzoBase, { AsyncAuthStore } from "hanzobase";
  *
  * const store = new AsyncAuthStore({
  *     save:    async (serialized) => AsyncStorage.setItem("pb_auth", serialized),
  *     initial: AsyncStorage.getItem("pb_auth"),
  * });
  *
- * const pb = new PocketBase("https://example.com", store)
+ * const pb = new HanzoBase("https://example.com", store)
  * ```
  */
 declare class AsyncAuthStore extends BaseAuthStore {

@@ -1,7 +1,7 @@
-PocketBase JavaScript SDK
+HanzoBase JavaScript SDK
 ======================================================================
 
-Official JavaScript SDK (browser and node) for interacting with the [PocketBase API](https://pocketbase.io/docs).
+Official JavaScript SDK (browser and node) for interacting with the [HanzoBase API](https://hanzo.ai/docs).
 
 - [Installation](#installation)
 - [Usage](#usage)
@@ -29,9 +29,9 @@ Official JavaScript SDK (browser and node) for interacting with the [PocketBase 
 ### Browser (manually via script tag)
 
 ```html
-<script src="/path/to/dist/pocketbase.umd.js"></script>
+<script src="/path/to/dist/hanzobase.umd.js"></script>
 <script type="text/javascript">
-    const pb = new PocketBase("https://example.com")
+    const pb = new HanzoBase("https://example.com")
     ...
 </script>
 ```
@@ -39,9 +39,9 @@ Official JavaScript SDK (browser and node) for interacting with the [PocketBase 
 _OR if you are using ES modules:_
 ```html
 <script type="module">
-    import PocketBase from '/path/to/dist/pocketbase.es.mjs'
+    import HanzoBase from '/path/to/dist/hanzobase.es.mjs'
 
-    const pb = new PocketBase("https://example.com")
+    const pb = new HanzoBase("https://example.com")
     ...
 </script>
 ```
@@ -49,15 +49,15 @@ _OR if you are using ES modules:_
 ### Node.js (via npm)
 
 ```sh
-npm install pocketbase --save
+npm install hanzobase --save
 ```
 
 ```js
 // Using ES modules (default)
-import PocketBase from 'pocketbase'
+import HanzoBase from 'hanzobase'
 
 // OR if you are using CommonJS modules
-const PocketBase = require('pocketbase/cjs')
+const HanzoBase = require('hanzobase/cjs')
 ```
 
 > 🔧 For **Node < 17** you'll need to load a `fetch()` polyfill.
@@ -82,9 +82,9 @@ const PocketBase = require('pocketbase/cjs')
 ## Usage
 
 ```js
-import PocketBase from 'pocketbase';
+import HanzoBase from 'hanzobase';
 
-const pb = new PocketBase('http://127.0.0.1:8090');
+const pb = new HanzoBase('http://127.0.0.1:8090');
 
 ...
 
@@ -98,7 +98,7 @@ const result = await pb.collection('example').getList(1, 20, {
 
 // and much more...
 ```
-> More detailed API docs and copy-paste examples could be found in the [API documentation for each service](https://pocketbase.io/docs/api-records/).
+> More detailed API docs and copy-paste examples could be found in the [API documentation for each service](https://hanzo.ai/docs/api-records/).
 
 
 ## Caveats
@@ -121,14 +121,14 @@ The supported placeholder parameter values are:
 - `string` (_single quotes are autoescaped_)
 - `number`
 - `boolean`
-- `Date` object (_will be stringified into the format expected by PocketBase_)
+- `Date` object (_will be stringified into the format expected by HanzoBase_)
 - `null`
 - everything else is converted to a string using `JSON.stringify()`
 
 
 ### File upload
 
-PocketBase Web API supports file upload via `multipart/form-data` requests,
+HanzoBase Web API supports file upload via `multipart/form-data` requests,
 which means that to upload a file it is enough to provide either a [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData) instance OR plain object with `File`/`Blob` prop values.
 
 - Using plain object as body _(this is the same as above and it will be converted to `FormData` behind the scenes)_:
@@ -189,7 +189,7 @@ The SDK keeps track of the authenticated token and auth model for you via the `p
 
 ##### LocalAuthStore (default)
 
-The default [`LocalAuthStore`](https://github.com/pocketbase/js-sdk/blob/master/src/stores/LocalAuthStore.ts) uses the browser's `LocalStorage` if available, otherwise - will fallback to runtime/memory (aka. on page refresh or service restart you'll have to authenticate again).
+The default [`LocalAuthStore`](https://github.com/hanzoai/js-sdkPB/blob/master/src/stores/LocalAuthStore.ts) uses the browser's `LocalStorage` if available, otherwise - will fallback to runtime/memory (aka. on page refresh or service restart you'll have to authenticate again).
 
 Conveniently, the default store also takes care to automatically sync the auth store state between multiple tabs.
 
@@ -197,25 +197,25 @@ Conveniently, the default store also takes care to automatically sync the auth s
 
 ##### AsyncAuthStore
 
-The SDK comes also with a helper [`AsyncAuthStore`](https://github.com/pocketbase/js-sdk/blob/master/src/stores/AsyncAuthStore.ts) that you can use to integrate with any 3rd party async storage implementation (_usually this is needed when working with React Native_):
+The SDK comes also with a helper [`AsyncAuthStore`](https://github.com/hanzoai/js-sdkPB/blob/master/src/stores/AsyncAuthStore.ts) that you can use to integrate with any 3rd party async storage implementation (_usually this is needed when working with React Native_):
 ```js
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import PocketBase, { AsyncAuthStore } from 'pocketbase';
+import HanzoBase, { AsyncAuthStore } from 'hanzobase';
 
 const store = new AsyncAuthStore({
     save:    async (serialized) => AsyncStorage.setItem('pb_auth', serialized),
     initial: AsyncStorage.getItem('pb_auth'),
 });
 
-const pb = new PocketBase('http://127.0.0.1:8090', store)
+const pb = new HanzoBase('http://127.0.0.1:8090', store)
 ```
 
 ##### Custom auth store
 
-In some situations it could be easier to create your own custom auth store. For this you can extend [`BaseAuthStore`](https://github.com/pocketbase/js-sdk/blob/master/src/stores/BaseAuthStore.ts) and pass the new custom instance as constructor argument to the client:
+In some situations it could be easier to create your own custom auth store. For this you can extend [`BaseAuthStore`](https://github.com/hanzoai/js-sdkPB/blob/master/src/stores/BaseAuthStore.ts) and pass the new custom instance as constructor argument to the client:
 
 ```js
-import PocketBase, { BaseAuthStore } from 'pocketbase';
+import HanzoBase, { BaseAuthStore } from 'hanzobase';
 
 class CustomAuthStore extends BaseAuthStore {
     save(token, model) {
@@ -225,12 +225,12 @@ class CustomAuthStore extends BaseAuthStore {
     }
 }
 
-const pb = new PocketBase('http://127.0.0.1:8090', new CustomAuthStore());
+const pb = new HanzoBase('http://127.0.0.1:8090', new CustomAuthStore());
 ```
 
 ##### Common auth store fields and methods
 
-The default `pb.authStore` extends [`BaseAuthStore`](https://github.com/pocketbase/js-sdk/blob/master/src/stores/BaseAuthStore.ts) and has the following public members that you can use:
+The default `pb.authStore` extends [`BaseAuthStore`](https://github.com/hanzoai/js-sdkPB/blob/master/src/stores/BaseAuthStore.ts) and has the following public members that you can use:
 
 ```js
 BaseAuthStore {
@@ -324,7 +324,7 @@ pb.collection('tasks').getList<Task>(1, 20) // -> results in Promise<ListResult<
 pb.collection('tasks').getOne<Task>("RECORD_ID")  // -> results in Promise<Task>
 ```
 
-Alternatively, if you don't want to type the generic argument every time you can define a global PocketBase type using type assertion:
+Alternatively, if you don't want to type the generic argument every time you can define a global HanzoBase type using type assertion:
 
 ```ts
 interface Task {
@@ -338,7 +338,7 @@ interface Post {
   active: boolean;
 }
 
-interface TypedPocketBase extends PocketBase {
+interface TypedHanzoBase extends HanzoBase {
   collection(idOrName: string): RecordService // default fallback for any other collection
   collection(idOrName: 'tasks'): RecordService<Task>
   collection(idOrName: 'posts'): RecordService<Post>
@@ -346,7 +346,7 @@ interface TypedPocketBase extends PocketBase {
 
 ...
 
-const pb = new PocketBase("http://127.0.0.1:8090") as TypedPocketBase;
+const pb = new HanzoBase("http://127.0.0.1:8090") as TypedHanzoBase;
 
 pb.collection('tasks').getOne("RECORD_ID") // -> results in Promise<Task>
 pb.collection('posts').getOne("RECORD_ID") // -> results in Promise<Post>
@@ -355,7 +355,7 @@ pb.collection('posts').getOne("RECORD_ID") // -> results in Promise<Post>
 
 ### Custom request options
 
-All API services accept an optional `options` argument (usually the last one and of type [`SendOptions`](https://github.com/pocketbase/js-sdk/blob/master/src/tools/options.ts)), that can be used to provide:
+All API services accept an optional `options` argument (usually the last one and of type [`SendOptions`](https://github.com/hanzoai/js-sdkPB/blob/master/src/tools/options.ts)), that can be used to provide:
 
 - custom headers for a single request
 - custom fetch options
@@ -393,7 +393,7 @@ To accomplish this, the SDK provides 2 function hooks:
 
 - `beforeSend` - triggered right before sending the `fetch` request, allowing you to inspect/modify the request config.
     ```js
-    const pb = new PocketBase('http://127.0.0.1:8090');
+    const pb = new HanzoBase('http://127.0.0.1:8090');
 
     pb.beforeSend = function (url, options) {
         // For list of the possible request options properties check
@@ -408,7 +408,7 @@ To accomplish this, the SDK provides 2 function hooks:
 
 - `afterSend` - triggered after successfully sending the `fetch` request, allowing you to inspect/modify the response object and its parsed data.
     ```js
-    const pb = new PocketBase('http://127.0.0.1:8090');
+    const pb = new HanzoBase('http://127.0.0.1:8090');
 
     pb.afterSend = function (response, data) {
         // do something with the response state
@@ -427,12 +427,12 @@ Unfortunately, **there is no "one size fits all" solution** because each framewo
 
 But in general, the idea is to use a cookie based flow:
 
-1. Create a new `PocketBase` instance for each server-side request
+1. Create a new `HanzoBase` instance for each server-side request
 2. "Load/Feed" your `pb.authStore` with data from the request cookie
 3. Perform your application server-side actions
 4. Before returning the response to the client, update the cookie with the latest `pb.authStore` state
 
-All [`BaseAuthStore`](https://github.com/pocketbase/js-sdk/blob/master/src/stores/BaseAuthStore.ts) instances have 2 helper methods that
+All [`BaseAuthStore`](https://github.com/hanzoai/js-sdkPB/blob/master/src/stores/BaseAuthStore.ts) instances have 2 helper methods that
 should make working with cookies a little bit easier:
 
 ```js
@@ -448,16 +448,16 @@ Below you could find several examples:
 <details>
   <summary><strong>SvelteKit</strong></summary>
 
-One way to integrate with SvelteKit SSR could be to create the PocketBase client in a [hook handle](https://kit.svelte.dev/docs/hooks#handle)
+One way to integrate with SvelteKit SSR could be to create the HanzoBase client in a [hook handle](https://kit.svelte.dev/docs/hooks#handle)
 and pass it to the other server-side actions using the `event.locals`.
 
 ```js
 // src/hooks.server.js
-import PocketBase from 'pocketbase';
+import HanzoBase from 'hanzobase';
 
 /** @type {import('@sveltejs/kit').Handle} */
 export async function handle({ event, resolve }) {
-    event.locals.pb = new PocketBase('http://127.0.0.1:8090');
+    event.locals.pb = new HanzoBase('http://127.0.0.1:8090');
 
     // load the store data from the request cookie string
     event.locals.pb.authStore.loadFromCookie(event.request.headers.get('cookie') || '');
@@ -497,16 +497,16 @@ export async function POST({ request, locals }) {
 }
 ```
 
-For proper `locals.pb` type detection, you can also add `PocketBase` in your your global types definition:
+For proper `locals.pb` type detection, you can also add `HanzoBase` in your your global types definition:
 
 ```ts
 // src/app.d.ts
-import PocketBase from 'pocketbase';
+import HanzoBase from 'hanzobase';
 
 declare global {
     declare namespace App {
         interface Locals {
-            pb: PocketBase
+            pb: HanzoBase
         }
     }
 }
@@ -516,16 +516,16 @@ declare global {
 <details>
   <summary><strong>Astro</strong></summary>
 
-To integrate with Astro SSR, you could create the PocketBase client in the [Middleware](https://docs.astro.build/en/guides/middleware) and pass it to the Astro components using the `Astro.locals`.
+To integrate with Astro SSR, you could create the HanzoBase client in the [Middleware](https://docs.astro.build/en/guides/middleware) and pass it to the Astro components using the `Astro.locals`.
 
 ```ts 
 // src/middleware/index.ts
-import PocketBase from 'pocketbase';
+import HanzoBase from 'hanzobase';
 
 import { defineMiddleware } from 'astro/middleware';
 
 export const onRequest = defineMiddleware(async ({ locals, request }: any, next: () => any) => {
-    locals.pb = new PocketBase('http://127.0.0.1:8090');
+    locals.pb = new HanzoBase('http://127.0.0.1:8090');
 
     // load the store data from the request cookie string
     locals.pb.authStore.loadFromCookie(request.headers.get('cookie') || '');
@@ -577,15 +577,15 @@ export default defineConfig({
 <details>
   <summary><strong>Nuxt 3</strong></summary>
 
-One way to integrate with Nuxt 3 SSR could be to create the PocketBase client in a [nuxt plugin](https://v3.nuxtjs.org/guide/directory-structure/plugins)
+One way to integrate with Nuxt 3 SSR could be to create the HanzoBase client in a [nuxt plugin](https://v3.nuxtjs.org/guide/directory-structure/plugins)
 and provide it as a helper to the `nuxtApp` instance:
 
 ```js
-// plugins/pocketbase.js
-import PocketBase from 'pocketbase';
+// plugins/hanzobase.js
+import HanzoBase from 'hanzobase';
 
 export default defineNuxtPlugin(async () => {
-  const pb = new PocketBase('http://127.0.0.1:8090');
+  const pb = new HanzoBase('http://127.0.0.1:8090');
 
   const cookie = useCookie('pb_auth', {
     path:     '/',
@@ -643,14 +643,14 @@ And then in your component you could access it like this:
 <details>
   <summary><strong>Nuxt 2</strong></summary>
 
-One way to integrate with Nuxt 2 SSR could be to create the PocketBase client in a [nuxt plugin](https://nuxtjs.org/docs/directory-structure/plugins#plugins-directory) and provide it as a helper to the `$root` context:
+One way to integrate with Nuxt 2 SSR could be to create the HanzoBase client in a [nuxt plugin](https://nuxtjs.org/docs/directory-structure/plugins#plugins-directory) and provide it as a helper to the `$root` context:
 
 ```js
-// plugins/pocketbase.js
-import PocketBase from  'pocketbase';
+// plugins/hanzobase.js
+import HanzoBase from  'hanzobase';
 
 export default async (ctx, inject) => {
-  const pb = new PocketBase('http://127.0.0.1:8090');
+  const pb = new HanzoBase('http://127.0.0.1:8090');
 
   // load the store data from the request cookie string
   pb.authStore.loadFromCookie(ctx.req?.headers?.cookie || '');
@@ -668,7 +668,7 @@ export default async (ctx, inject) => {
       pb.authStore.clear();
   }
 
-  inject('pocketbase', pb);
+  inject('hanzobase', pb);
 };
 ```
 
@@ -683,9 +683,9 @@ And then in your component you could access it like this:
 
 <script>
   export default {
-    async asyncData({ $pocketbase }) {
+    async asyncData({ $hanzobase }) {
       // fetch and return all "example" records...
-      const items = await $pocketbase.collection('example').getFullList();
+      const items = await $hanzobase.collection('example').getFullList();
 
       return { items }
     }
@@ -701,14 +701,14 @@ Next.js doesn't seem to have a central place where you can read/modify the serve
 [There is support for middlewares](https://nextjs.org/docs/advanced-features/middleware),
 but they are very limited and, at the time of writing, you can't pass data from a middleware to the `getServerSideProps` functions (https://github.com/vercel/next.js/discussions/31792).
 
-One way to integrate with Next.js SSR could be to create a custom `PocketBase` instance in each of your `getServerSideProps`:
+One way to integrate with Next.js SSR could be to create a custom `HanzoBase` instance in each of your `getServerSideProps`:
 
 ```jsx
-import PocketBase from 'pocketbase';
+import HanzoBase from 'hanzobase';
 
 // you can place this helper in a separate file so that it can be reused
-async function initPocketBase(req, res) {
-  const pb = new PocketBase('http://127.0.0.1:8090');
+async function initHanzoBase(req, res) {
+  const pb = new HanzoBase('http://127.0.0.1:8090');
 
   // load the store data from the request cookie string
   pb.authStore.loadFromCookie(req?.headers?.cookie || '');
@@ -730,7 +730,7 @@ async function initPocketBase(req, res) {
 }
 
 export async function getServerSideProps({ req, res }) {
-  const pb = await initPocketBase(req, res)
+  const pb = await initHanzoBase(req, res)
 
   // fetch example records...
   const result = await pb.collection('example').getList(1, 30);
@@ -755,7 +755,7 @@ export default function Home() {
 The most common frontend related vulnerability is XSS (and CSRF when dealing with cookies).
 Fortunately, modern browsers can detect and mitigate most of this type of attacks if [Content Security Policy (CSP)](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP) is provided.
 
-**To prevent a malicious user or 3rd party script to steal your PocketBase auth token, it is recommended to configure a basic CSP for your application (either as `meta` tag or HTTP header).**
+**To prevent a malicious user or 3rd party script to steal your HanzoBase auth token, it is recommended to configure a basic CSP for your application (either as `meta` tag or HTTP header).**
 
 This is out of the scope of the SDK, but you could find more resources about CSP at:
 
@@ -771,12 +771,12 @@ This is out of the scope of the SDK, but you could find more resources about CSP
 ### Creating new client instance
 
 ```js
-const pb = new PocketBase(baseURL = '/', authStore = LocalAuthStore);
+const pb = new HanzoBase(baseURL = '/', authStore = LocalAuthStore);
 ```
 
 ### Instance methods
 
-> Each instance method returns the `PocketBase` instance allowing chaining.
+> Each instance method returns the `HanzoBase` instance allowing chaining.
 
 | Method                            | Description                                                                   |
 |:----------------------------------|:------------------------------------------------------------------------------|

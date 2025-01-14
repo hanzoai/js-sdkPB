@@ -8,7 +8,7 @@ function basePlugins() {
         ts(),
 
         // @todo before v1, test if feasible and consider removing the minification for the npm builds
-        // (https://github.com/pocketbase/js-sdk/issues/261)
+        // (https://github.com/hanzoai/js-sdkPB/issues/261)
         //
         // minify if we're building for production
         // (aka. npm run build instead of npm run dev)
@@ -23,12 +23,12 @@ function basePlugins() {
 }
 
 export default [
-    // ES bundle (the PocketBase client as default export + additional helper classes).
+    // ES bundle (the HanzoBase client as default export + additional helper classes).
     {
         input: 'src/index.ts',
         output: [
             {
-                file:      'dist/pocketbase.es.mjs',
+                file:      'dist/hanzobase.es.mjs',
                 format:    'es',
                 sourcemap: isProduction,
             },
@@ -40,12 +40,12 @@ export default [
     // ES bundle but with .js extension.
     //
     // This is needed mainly because of React Native not recognizing the mjs
-    // extension by default (see https://github.com/pocketbase/js-sdk/issues/47).
+    // extension by default (see https://github.com/hanzoai/js-sdkPB/issues/47).
     {
         input: 'src/index.ts',
         output: [
             {
-                file:      'dist/pocketbase.es.js',
+                file:      'dist/hanzobase.es.js',
                 format:    'es',
                 sourcemap: isProduction,
             },
@@ -54,13 +54,13 @@ export default [
         watch: { clearScreen: false },
     },
 
-    // UMD bundle (only the PocketBase client as default export).
+    // UMD bundle (only the HanzoBase client as default export).
     {
         input: 'src/Client.ts',
         output: [
             {
-                name:      'PocketBase',
-                file:      'dist/pocketbase.umd.js',
+                name:      'HanzoBase',
+                file:      'dist/hanzobase.umd.js',
                 format:    'umd',
                 exports:   'default',
                 sourcemap: isProduction,
@@ -70,13 +70,13 @@ export default [
         watch: { clearScreen: false },
     },
 
-    // CommonJS bundle (only the PocketBase client as default export).
+    // CommonJS bundle (only the HanzoBase client as default export).
     {
         input: 'src/Client.ts',
         output: [
             {
-                name:      'PocketBase',
-                file:      'dist/pocketbase.cjs.js',
+                name:      'HanzoBase',
+                file:      'dist/hanzobase.cjs.js',
                 format:    'cjs',
                 exports:   'default',
                 sourcemap: isProduction,
@@ -90,13 +90,13 @@ export default [
     // @deprecated - kept only for backwards compatibility and will be removed in v1.0.0
     // !!!
     //
-    // Browser-friendly iife bundle (only the PocketBase client as default export).
+    // Browser-friendly iife bundle (only the HanzoBase client as default export).
     {
         input: 'src/Client.ts',
         output: [
             {
-                name:      'PocketBase',
-                file:      'dist/pocketbase.iife.js',
+                name:      'HanzoBase',
+                file:      'dist/hanzobase.iife.js',
                 format:    'iife',
                 sourcemap: isProduction,
             },

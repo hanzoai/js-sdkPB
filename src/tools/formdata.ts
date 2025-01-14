@@ -6,7 +6,7 @@ export function isFile(val: any): boolean {
         (typeof Blob !== "undefined" && val instanceof Blob) ||
         (typeof File !== "undefined" && val instanceof File) ||
         // check for React Native file object format
-        // (see https://github.com/pocketbase/pocketbase/discussions/2002#discussioncomment-5254168)
+        // (see https://github.com/hanzoai/backendPB/discussions/2002#discussioncomment-5254168)
         (val !== null &&
             typeof val === "object" &&
             val.uri &&

@@ -5,7 +5,7 @@
 
 ## 0.24.0
 
-- Added support for assigning `FormData` as body to individual batch requests ([pocketbase#6145](https://github.com/pocketbase/pocketbase/discussions/6145)).
+- Added support for assigning `FormData` as body to individual batch requests ([hanzobase#6145](https://github.com/hanzoai/backendPB/discussions/6145)).
 
 
 ## 0.23.0
@@ -16,13 +16,13 @@
 
 ## 0.22.1
 
-- Fixed old `pb.authStore.isAdmin`/`pb.authStore.isAuthRecord` and marked them as deprecated in favour of `pb.authStore.isSuperuser` ([#323](https://github.com/pocketbase/js-sdk/issues/323)).
-    _Note that with PocketBase v0.23.0 superusers are converted to a system auth collection so you can always simply check the value of `pb.authStore.record?.collectionName`._
+- Fixed old `pb.authStore.isAdmin`/`pb.authStore.isAuthRecord` and marked them as deprecated in favour of `pb.authStore.isSuperuser` ([#323](https://github.com/hanzoai/js-sdkPB/issues/323)).
+    _Note that with HanzoBase v0.23.0 superusers are converted to a system auth collection so you can always simply check the value of `pb.authStore.record?.collectionName`._
 
 
 ## 0.22.0
 
-**⚠️ This release introduces some breaking changes and works only with PocketBase v0.23.0+.**
+**⚠️ This release introduces some breaking changes and works only with HanzoBase v0.23.0+.**
 
 - Added support for sending batch/transactional create/updated/delete/**upsert** requests with the new batch Web APIs.
     ```js
@@ -45,7 +45,7 @@
     await pb.collection("users").authWithOTP(result.otpId, "EMAIL_CODE");
     ```
 
-    Note that PocketBase v0.23.0 comes also with Multi-factor authentication (MFA) support.
+    Note that HanzoBase v0.23.0 comes also with Multi-factor authentication (MFA) support.
     When enabled from the dashboard, the first auth attempt will result in 401 response and a `mfaId` response,
     that will have to be submitted with the second auth request. For example:
     ```js
@@ -87,7 +87,7 @@
 
 - Added the submitted fetch options as 3rd last argument in the `pb.afterSend` hook.
 
-- Instead of replacing the entire `pb.authStore.record`, on auth record update we now only replace the available returned response record data ([pocketbase#5638](https://github.com/pocketbase/pocketbase/issues/5638)).
+- Instead of replacing the entire `pb.authStore.record`, on auth record update we now only replace the available returned response record data ([hanzobase#5638](https://github.com/hanzoai/backendPB/issues/5638)).
 
 - ⚠️ Admins are converted to `_superusers` auth collection and there is no longer `AdminService` and `AdminModel` types.
     `pb.admins` is soft-deprecated and aliased to `pb.collection("_superusers")`.
@@ -147,7 +147,7 @@
 
 ## 0.21.5
 
-- Shallow copy the realtime subscribe `options` argument for consistency with the other methods ([#308](https://github.com/pocketbase/js-sdk/issues/308)).
+- Shallow copy the realtime subscribe `options` argument for consistency with the other methods ([#308](https://github.com/hanzoai/js-sdkPB/issues/308)).
 
 
 ## 0.21.4
@@ -163,7 +163,7 @@
 
 ## 0.21.2
 
-- Exported `HealthService` types ([#289](https://github.com/pocketbase/js-sdk/issues/289)).
+- Exported `HealthService` types ([#289](https://github.com/hanzoai/js-sdkPB/issues/289)).
 
 
 ## 0.21.1
@@ -179,7 +179,7 @@
 
 ## 0.21.0
 
-**⚠️ This release works only with PocketBase v0.21.0+ due to changes of how the `multipart/form-data` body is handled.**
+**⚠️ This release works only with HanzoBase v0.21.0+ due to changes of how the `multipart/form-data` body is handled.**
 
 - Properly sent json body with `multipart/form-data` requests.
   _This should fix the edge cases mentioned in the v0.20.3 release._
@@ -189,7 +189,7 @@
 
 ## 0.20.3
 
-- Partial and temporary workaround for the auto `application/json` -> `multipart/form-data` request serialization of a `json` field when a `Blob`/`File` is found in the request body ([#274](https://github.com/pocketbase/js-sdk/issues/274)).
+- Partial and temporary workaround for the auto `application/json` -> `multipart/form-data` request serialization of a `json` field when a `Blob`/`File` is found in the request body ([#274](https://github.com/hanzoai/js-sdkPB/issues/274)).
 
     The "fix" is partial because there are still 2 edge cases that are not handled - when a `json` field value is empty array (eg. `[]`) or array of strings (eg. `["a","b"]`).
     The reason for this is because the SDK doesn't have information about the field types and doesn't know which field is a `json` or an arrayable `select`, `file` or `relation`, so it can't serialize it properly on its own as `FormData` string value.
@@ -203,14 +203,14 @@
     })
     ```
 
-    A proper fix for this will be implemented with PocketBase v0.21.0 where we'll have support for a special `@jsonPayload` multipart body key, which will allow us to submit mixed `multipart/form-data` content (_kindof similar to the `multipart/mixed` MIME_).
+    A proper fix for this will be implemented with HanzoBase v0.21.0 where we'll have support for a special `@jsonPayload` multipart body key, which will allow us to submit mixed `multipart/form-data` content (_kindof similar to the `multipart/mixed` MIME_).
 
 
 ## 0.20.2
 
-- Throw 404 error for `getOne("")` when invoked with empty id ([#271](https://github.com/pocketbase/js-sdk/issues/271)).
+- Throw 404 error for `getOne("")` when invoked with empty id ([#271](https://github.com/hanzoai/js-sdkPB/issues/271)).
 
-- Added `@throw {ClientResponseError}` jsdoc annotation to the regular request methods ([#262](https://github.com/pocketbase/js-sdk/issues/262)).
+- Added `@throw {ClientResponseError}` jsdoc annotation to the regular request methods ([#262](https://github.com/hanzoai/js-sdkPB/issues/262)).
 
 
 ## 0.20.1
@@ -230,9 +230,9 @@
       ...
     }, { filter: "someField > 10" });
     ```
-    _This works only with PocketBase v0.20.0+._
+    _This works only with HanzoBase v0.20.0+._
 
-- Changes to the logs service methods in relation to the logs generalization in PocketBase v0.20.0+:
+- Changes to the logs service methods in relation to the logs generalization in HanzoBase v0.20.0+:
     ```js
     pb.logs.getRequestsList(...)  -> pb.logs.getList(...)
     pb.logs.getRequest(...)       -> pb.logs.getOne(...)
@@ -262,14 +262,14 @@
     - `string` (_single quotes will be autoescaped_)
     - `number`
     - `boolean`
-    - `Date` object (_will be stringified into the format expected by PocketBase_)
+    - `Date` object (_will be stringified into the format expected by HanzoBase_)
     - `null`
     - anything else is converted to a string using `JSON.stringify()`
 
 
 ## 0.18.3
 
-- Added optional generic support for the `RecordService` ([#251](https://github.com/pocketbase/js-sdk/issues/251)).
+- Added optional generic support for the `RecordService` ([#251](https://github.com/hanzoai/js-sdkPB/issues/251)).
     This should allow specifying a single TypeScript definition for the client, eg. using type assertion:
     ```ts
     interface Task {
@@ -283,7 +283,7 @@
       active: boolean;
     }
 
-    interface TypedPocketBase extends PocketBase {
+    interface TypedHanzoBase extends HanzoBase {
       collection(idOrName: string): RecordService // default fallback for any other collection
       collection(idOrName: 'tasks'): RecordService<Task>
       collection(idOrName: 'posts'): RecordService<Post>
@@ -291,7 +291,7 @@
 
     ...
 
-    const pb = new PocketBase("http://127.0.0.1:8090") as TypedPocketBase;
+    const pb = new HanzoBase("http://127.0.0.1:8090") as TypedHanzoBase;
 
     // the same as pb.collection('tasks').getOne<Task>("RECORD_ID")
     await pb.collection('tasks').getOne("RECORD_ID") // -> results in Task
@@ -303,7 +303,7 @@
 
 ## 0.18.2
 
-- Added support for assigning a `Promise` as `AsyncAuthStore` initial value ([#249](https://github.com/pocketbase/js-sdk/issues/249)).
+- Added support for assigning a `Promise` as `AsyncAuthStore` initial value ([#249](https://github.com/hanzoai/js-sdkPB/issues/249)).
 
 
 ## 0.18.1
@@ -313,7 +313,7 @@
 
 ## 0.18.0
 
-- Added `pb.backups.upload(data)` action (_available with PocketBase v0.18.0_).
+- Added `pb.backups.upload(data)` action (_available with HanzoBase v0.18.0_).
 
 - Added _experimental_ `autoRefreshThreshold` option to auto refresh (or reauthenticate) the AuthStore when authenticated as admin.
     _This could be used as an alternative to fixed Admin API keys._
@@ -338,7 +338,7 @@
 
 ## 0.17.1
 
-- Fixed typo in the deprecation console.warn messages ([#235](https://github.com/pocketbase/js-sdk/pull/235); thanks @heloineto).
+- Fixed typo in the deprecation console.warn messages ([#235](https://github.com/hanzoai/js-sdkPB/pull/235); thanks @heloineto).
 
 
 ## 0.17.0
@@ -368,14 +368,14 @@
 - Added new helper `AsyncAuthStore` class that can be used to integrate with any 3rd party async storage implementation (_usually this is needed when working with React Native_):
     ```js
     import AsyncStorage from "@react-native-async-storage/async-storage";
-    import PocketBase, { AsyncAuthStore } from "pocketbase";
+    import HanzoBase, { AsyncAuthStore } from "hanzobase";
 
     const store = new AsyncAuthStore({
         save:    async (serialized) => AsyncStorage.setItem("pb_auth", serialized),
         initial: AsyncStorage.getItem("pb_auth"),
     });
 
-    const pb = new PocketBase("https://example.com", store)
+    const pb = new HanzoBase("https://example.com", store)
     ```
 
 - `pb.files.getUrl()` now returns empty string in case an empty filename is passed.
@@ -457,41 +457,41 @@
 ## 0.16.0
 
 - Added `skipTotal=1` query parameter by default for the `getFirstListItem()` and `getFullList()` requests.
-  _Note that this have performance boost only with PocketBase v0.17+._
+  _Note that this have performance boost only with HanzoBase v0.17+._
 
-- Added optional `download=1` query parameter to force file urls with `Content-Disposition: attachment` (_supported with PocketBase v0.17+_).
+- Added optional `download=1` query parameter to force file urls with `Content-Disposition: attachment` (_supported with HanzoBase v0.17+_).
 
 
 ## 0.15.3
 
 - Automatically resolve pending realtime connect `Promise`s in case `unsubscribe` is called before
-  `subscribe` is being able to complete ([pocketbase#2897](https://github.com/pocketbase/pocketbase/discussions/2897#discussioncomment-6423818)).
+  `subscribe` is being able to complete ([hanzobase#2897](https://github.com/hanzoai/backendPB/discussions/2897#discussioncomment-6423818)).
 
 
 ## 0.15.2
 
-- Replaced `new URL(...)` with manual url parsing as it is not fully supported in React Native ([pocketbase#2484](https://github.com/pocketbase/pocketbase/discussions/2484#discussioncomment-6114540)).
+- Replaced `new URL(...)` with manual url parsing as it is not fully supported in React Native ([hanzobase#2484](https://github.com/hanzoai/backendPB/discussions/2484#discussioncomment-6114540)).
 
 - Fixed nested `ClientResponseError.originalError` wrapping and added `ClientResponseError` constructor tests.
 
 
 ## 0.15.1
 
-- Cancel any pending subscriptions submit requests on realtime disconnect ([#204](https://github.com/pocketbase/js-sdk/issues/204)).
+- Cancel any pending subscriptions submit requests on realtime disconnect ([#204](https://github.com/hanzoai/js-sdkPB/issues/204)).
 
 
 ## 0.15.0
 
-- Added `fields` to the optional query parameters for limiting the returned API fields (_available with PocketBase v0.16.0_).
+- Added `fields` to the optional query parameters for limiting the returned API fields (_available with HanzoBase v0.16.0_).
 
-- Added `pb.backups` service for the new PocketBase backup and restore APIs (_available with PocketBase v0.16.0_).
+- Added `pb.backups` service for the new HanzoBase backup and restore APIs (_available with HanzoBase v0.16.0_).
 
-- Updated `pb.settings.testS3(filesystem)` to allow specifying a filesystem to test - `storage` or `backups` (_available with PocketBase v0.16.0_).
+- Updated `pb.settings.testS3(filesystem)` to allow specifying a filesystem to test - `storage` or `backups` (_available with HanzoBase v0.16.0_).
 
 
 ## 0.14.4
 
-- Removed the legacy aliased `BaseModel.isNew` getter since it conflicts with similarly named record fields ([pocketbase#2385](https://github.com/pocketbase/pocketbase/discussions/2385)).
+- Removed the legacy aliased `BaseModel.isNew` getter since it conflicts with similarly named record fields ([hanzobase#2385](https://github.com/hanzoai/backendPB/discussions/2385)).
   _This helper is mainly used in the Admin UI, but if you are also using it in your code you can replace it with the `$` prefixed version, aka. `BaseModel.$isNew`._
 
 
@@ -520,7 +520,7 @@
     })
     ```
 
-    Works with PocketBase v0.15.0+.
+    Works with HanzoBase v0.15.0+.
 
     This method initializes a one-off realtime subscription and will
     open a popup window with the OAuth2 vendor page to authenticate.
@@ -546,19 +546,19 @@
     ```
     _`pb.getFileUrl()` is soft-deprecated and acts as alias calling `pb.files.getUrl()` under the hood._
 
-    Works with PocketBase v0.15.0+.
+    Works with HanzoBase v0.15.0+.
 
 
 ## 0.13.1
 
-- Added option to specify a generic `send()` return type and defined `SendOptions` type ([#171](https://github.com/pocketbase/js-sdk/pull/171); thanks @iamelevich).
+- Added option to specify a generic `send()` return type and defined `SendOptions` type ([#171](https://github.com/hanzoai/js-sdkPB/pull/171); thanks @iamelevich).
 
-- Deprecated `SchemaField.unique` prop since its function is replaced by `Collection.indexes` in the upcoming PocketBase v0.14.0 release.
+- Deprecated `SchemaField.unique` prop since its function is replaced by `Collection.indexes` in the upcoming HanzoBase v0.14.0 release.
 
 
 ## 0.13.0
 
-- Aliased all `BaseModel` helpers with `$` equivalent to avoid conflicts with the dynamic record props ([#169](https://github.com/pocketbase/js-sdk/issues/169)).
+- Aliased all `BaseModel` helpers with `$` equivalent to avoid conflicts with the dynamic record props ([#169](https://github.com/hanzoai/js-sdkPB/issues/169)).
   ```js
   isNew      -> $isNew
   load(data) -> $load(data)
@@ -568,21 +568,21 @@
   ```
   _For backward compatibility, the old helpers will still continue to work if the record doesn't have a conflicting field name._
 
-- Updated `pb.beforeSend` and `pb.afterSend` signatures to allow returning and awaiting an optional `Promise` ([#166](https://github.com/pocketbase/js-sdk/pull/166); thanks @Bobby-McBobface).
+- Updated `pb.beforeSend` and `pb.afterSend` signatures to allow returning and awaiting an optional `Promise` ([#166](https://github.com/hanzoai/js-sdkPB/pull/166); thanks @Bobby-McBobface).
 
-- Added `Collection.indexes` field for the new collection indexes support in the upcoming PocketBase v0.14.0.
+- Added `Collection.indexes` field for the new collection indexes support in the upcoming HanzoBase v0.14.0.
 
-- Added `pb.settings.generateAppleClientSecret()` for sending a request to generate Apple OAuth2 client secret in the upcoming PocketBase v0.14.0.
+- Added `pb.settings.generateAppleClientSecret()` for sending a request to generate Apple OAuth2 client secret in the upcoming HanzoBase v0.14.0.
 
 
 ## 0.12.1
 
-- Fixed request `multipart/form-data` body check to allow the React Native Android and iOS custom `FormData` implementation as valid `fetch` body ([#2002](https://github.com/pocketbase/pocketbase/discussions/2002)).
+- Fixed request `multipart/form-data` body check to allow the React Native Android and iOS custom `FormData` implementation as valid `fetch` body ([#2002](https://github.com/hanzoai/backendPB/discussions/2002)).
 
 
 ## 0.12.0
 
-- Changed the return type of `pb.beforeSend` hook to allow modifying the request url ([#1930](https://github.com/pocketbase/pocketbase/discussions/1930)).
+- Changed the return type of `pb.beforeSend` hook to allow modifying the request url ([#1930](https://github.com/hanzoai/backendPB/discussions/1930)).
   ```js
   // old
   pb.beforeSend = function (url, options) {
@@ -601,7 +601,7 @@
 
 ## 0.11.1
 
-- Exported the services class definitions to allow being used as argument types ([#153](https://github.com/pocketbase/js-sdk/issues/153)).
+- Exported the services class definitions to allow being used as argument types ([#153](https://github.com/hanzoai/js-sdkPB/issues/153)).
   ```js
   CrudService
   AdminService
@@ -633,7 +633,7 @@
 
 ## 0.10.0
 
-- Added more helpful message for the `ECONNREFUSED ::1` localhost error (related to [#21](https://github.com/pocketbase/js-sdk/issues/21)).
+- Added more helpful message for the `ECONNREFUSED ::1` localhost error (related to [#21](https://github.com/hanzoai/js-sdkPB/issues/21)).
 
 - Preserved the "original" function and class names in the minified output for those who rely on `*.prototype.name`.
 
@@ -649,12 +649,12 @@
 
 ## 0.9.0
 
-- Added `pb.health.check()` that checks the health status of the API service (_available in PocketBase v0.10.0_)
+- Added `pb.health.check()` that checks the health status of the API service (_available in HanzoBase v0.10.0_)
 
 
 ## 0.8.4
 
-- Added type declarations for the action query parameters ([#102](https://github.com/pocketbase/js-sdk/pull/102); thanks @sewera).
+- Added type declarations for the action query parameters ([#102](https://github.com/hanzoai/js-sdkPB/pull/102); thanks @sewera).
   ```js
   BaseQueryParams
   ListQueryParams
@@ -667,7 +667,7 @@
 
 ## 0.8.3
 
-- Renamed the declaration file extension from `.d.ts` to `.d.mts` to prevent type resolution issues ([#92](https://github.com/pocketbase/js-sdk/issues/92)).
+- Renamed the declaration file extension from `.d.ts` to `.d.mts` to prevent type resolution issues ([#92](https://github.com/hanzoai/js-sdkPB/issues/92)).
 
 
 ## 0.8.2
@@ -690,7 +690,7 @@ This release contains only documentation fixes:
 
 ## 0.8.0
 
-> ⚠️ Please note that this release works only with the new PocketBase v0.8+ API!
+> ⚠️ Please note that this release works only with the new HanzoBase v0.8+ API!
 >
 > See the breaking changes below for what has changed since v0.7.x.
 
@@ -709,7 +709,7 @@ This release contains only documentation fixes:
 
 #### Breaking changes
 
-- Changed the contstructor from `PocketBase(url, lang?, store?)` to `PocketBase(url, store?, lang?)` (aka. the `lang` option is now last).
+- Changed the contstructor from `HanzoBase(url, lang?, store?)` to `HanzoBase(url, store?, lang?)` (aka. the `lang` option is now last).
 
 - For easier and more conventional parsing, all DateTime strings now have `Z` as suffix, so that you can do directly `new Date('2022-01-01 01:02:03.456Z')`.
 

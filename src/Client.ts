@@ -27,11 +27,11 @@ export interface BeforeSendResult {
 }
 
 /**
- * PocketBase JS Client.
+ * HanzoBase JS Client.
  */
 export default class Client {
     /**
-     * The base PocketBase backend url address (eg. 'http://127.0.0.1.8090').
+     * The base HanzoBase backend url address (eg. 'http://127.0.0.1.8090').
      */
     baseURL: string;
 
@@ -180,7 +180,7 @@ export default class Client {
 
     /**
      * @deprecated
-     * With PocketBase v0.23.0 admins are converted to a regular auth
+     * With HanzoBase v0.23.0 admins are converted to a regular auth
      * collection named "_superusers", aka. you can use directly collection("_superusers").
      */
     get admins(): RecordService {
@@ -262,7 +262,7 @@ export default class Client {
      * - `string` (_single quotes are autoescaped_)
      * - `number`
      * - `boolean`
-     * - `Date` object (_stringified into the PocketBase datetime format_)
+     * - `Date` object (_stringified into the HanzoBase datetime format_)
      * - `null`
      * - everything else is converted to a string using `JSON.stringify()`
      *

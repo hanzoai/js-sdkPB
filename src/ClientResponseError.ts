@@ -44,10 +44,10 @@ export class ClientResponseError extends Error {
         if (!this.message) {
             if (this.isAbort) {
                 this.message =
-                    "The request was autocancelled. You can find more info in https://github.com/pocketbase/js-sdk#auto-cancellation.";
+                    "The request was autocancelled. You can find more info in https://github.com/hanzoai/js-sdkPB#auto-cancellation.";
             } else if (this.originalError?.cause?.message?.includes("ECONNREFUSED ::1")) {
                 this.message =
-                    "Failed to connect to the PocketBase server. Try changing the SDK URL from localhost to 127.0.0.1 (https://github.com/pocketbase/js-sdk/issues/21).";
+                    "Failed to connect to the HanzoBase server. Try changing the SDK URL from localhost to 127.0.0.1 (https://github.com/hanzoai/js-sdkPB/issues/21).";
             } else {
                 this.message = "Something went wrong while processing your request.";
             }
